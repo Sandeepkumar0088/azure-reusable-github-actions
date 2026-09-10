@@ -42,12 +42,16 @@ jobs:
         with:
           name: ${{  inputs.component  }}-jar
           path: ./
-      - name: docker login
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 012751250483.dkr.ecr.us-east-1.amazonaws.com
-      - run: docker build -t 012751250483.dkr.ecr.us-east-1.amazonaws.com/${{  inputs.component  }} .
-        name: docker build
-      - run: docker push 012751250483.dkr.ecr.us-east-1.amazonaws.com/${{  inputs.component  }}
-        name: docker build
+
+      - name: docker build
+        run: docker build -t ${{  inputs.component  }} .
+
+      - name: docker tag
+        run: docker tag cart roboshop0088.azurecr.io/${{  inputs.component  }}
+
+      - name: docker push
+        run: docker push roboshop0088.azurecr.io/${{  inputs.component  }}
+
   dev-deploy:
     runs-on: self-hosted
     environment: dev
@@ -55,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: Sandeepkumar0088/roboshop-helm-charts-v1
+          repository: Sandeepkumar0088/azure-helm-charts
 #      - name: Configure AWS credentials
 #        uses: aws-actions/configure-aws-credentials@v4
 #        with:
@@ -67,7 +71,8 @@ jobs:
 #        run: |
 #          aws eks update-kubeconfig --region us-east-1 --name dev
       - name: get kubectl config
-        run: aws eks update-kubeconfig --name dev
+        run: az aks get-credentials --resource-group cluster --name dev
+
       - name: helm deploy app
         run: helm upgrade -i ${{  inputs.component  }} . -f templates/${{  inputs.component  }}.yml --install --take-ownership
 
