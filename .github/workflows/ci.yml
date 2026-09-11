@@ -47,10 +47,10 @@ jobs:
         run: docker build -t ${{  inputs.component  }} .
 
       - name: docker tag
-        run: docker tag cart roboshop0088.azurecr.io/${{  inputs.component  }}
+        run: docker tag cart roboshop5427.azurecr.io/${{  inputs.component  }}
 
       - name: docker push
-        run: docker push roboshop0088.azurecr.io/${{  inputs.component  }}
+        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}
 
   dev-deploy:
     runs-on: self-hosted
