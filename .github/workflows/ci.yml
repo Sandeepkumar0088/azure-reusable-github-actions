@@ -43,13 +43,13 @@ jobs:
           name: ${{  inputs.component  }}-jar
           path: ./
 
-      - name: docker build
-        run: docker build -t ${{  inputs.component  }} .
+      - name: Build Image
+        run: docker build --load -t ${{  inputs.component  }} .
 
-#      - name: docker tag
-#        run: docker tag cart roboshop5427.azurecr.io/${{  inputs.component  }}:latest
+      - name: Tag Image
+        run: docker tag ${{  inputs.component  }}:latest roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
-      - name: docker push
+      - name: Push Image
         run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
   dev-deploy:
