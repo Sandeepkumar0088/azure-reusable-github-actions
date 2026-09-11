@@ -46,8 +46,8 @@ jobs:
       - name: docker build
         run: docker build -t ${{  inputs.component  }} .
 
-      - name: docker tag
-        run: docker tag cart roboshop5427.azurecr.io/${{  inputs.component  }}:latest
+#      - name: docker tag
+#        run: docker tag cart roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
       - name: docker push
         run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:latest
