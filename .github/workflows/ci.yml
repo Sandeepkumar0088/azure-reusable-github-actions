@@ -60,13 +60,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: Sandeepkumar0088/azure-helm-charts
-      - name: Install Azure CLI
-        run: |
-          if ! command -v az >/dev/null 2>&1; then
-             rpm --import https://packages.microsoft.com/keys/microsoft.asc
-             dnf install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
-             dnf install -y azure-cli
-          fi
 
       - name: get kubectl config
         run: az aks get-credentials --resource-group cluster --name dev --overwrite-existing
