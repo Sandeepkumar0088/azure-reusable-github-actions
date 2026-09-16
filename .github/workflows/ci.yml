@@ -60,21 +60,27 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: Sandeepkumar0088/azure-helm-charts
-      - name: Test Azure Secret
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-        run: |
-          if [ -z "$AZURE_CREDENTIALS" ]; then
-            echo "❌ SECRET IS EMPTY"
-            exit 1
-          else
-            echo "✅ SECRET EXISTS"
-          fi
-
-      - uses: azure/login@v3
+      - name: Azure Login
+        uses: azure/login@v3
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
+          auth-type: IDENTITY
+          subscription-id: "bb2e4b65-7863-4a64-99b2-cd7d29b73bd7"
+          tenant-id: "525ac05a-796a-4239-a302-33808d9d2c38"
+#      - name: Test Azure Secret
+#        env:
+#          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+#        run: |
+#          if [ -z "$AZURE_CREDENTIALS" ]; then
+#            echo "❌ SECRET IS EMPTY"
+#            exit 1
+#          else
+#            echo "✅ SECRET EXISTS"
+#          fi
+
+#      - uses: azure/login@v3
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#          enable-AzPSSession: true
 
 #        with:
 #          client-id: ${{ secrets.AZURE_CLIENT_ID }}
