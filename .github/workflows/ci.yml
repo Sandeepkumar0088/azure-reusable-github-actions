@@ -61,8 +61,8 @@ jobs:
         with:
           repository: Sandeepkumar0088/azure-helm-charts
       - name: Check Azure secret
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+#        env:
+#          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
         run: |
           if [ -z "$AZURE_CREDENTIALS" ]; then
             echo "❌ AZURE_CREDENTIALS IS EMPTY"
