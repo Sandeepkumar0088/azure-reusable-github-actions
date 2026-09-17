@@ -72,7 +72,7 @@ jobs:
         run: az aks get-credentials --resource-group cluster --name dev --overwrite-existing
 
       - name: helm deploy app
-        run: helm upgrade -i ${{  inputs.component  }} . -f templates/${{  inputs.component  }}.yml --install --take-ownership
+        run: helm upgrade -i ${{  inputs.component  }} . -f templates/${{  inputs.component  }}.yml  --set image.tag=${{ github.run_number }} --install --take-ownership
 
 #      - name: argocd login
 #        run: |
