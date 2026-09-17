@@ -47,10 +47,11 @@ jobs:
         run: docker build --load -t ${{  inputs.component  }} .
 
       - name: Tag Image
-        run: docker tag ${{  inputs.component  }}:latest roboshop5427.azurecr.io/${{  inputs.component  }}:latest
+#        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.sha }}
+        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/cart:${{ github.run_number }}
 
       - name: Push Image
-        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:latest
+        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
 
   dev-deploy:
     runs-on: self-hosted
