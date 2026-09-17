@@ -48,7 +48,7 @@ jobs:
 
       - name: Tag Image
 #        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.sha }}
-        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/cart:${{ github.run_number }}
+        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
 
       - name: Push Image
         run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
