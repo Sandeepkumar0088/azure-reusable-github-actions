@@ -72,7 +72,7 @@ jobs:
         run: az aks get-credentials --resource-group cluster --name dev --overwrite-existing
 
       - name: helm deploy app
-        run: helm upgrade -i ${{  inputs.component  }}:latest . -f templates/${{  inputs.component  }}.yml  --install --take-ownership
+        run: helm upgrade -i ${{  inputs.component  }} . -f templates/${{  inputs.component  }}.yml  --install --take-ownership
 
   qa-deploy:
     runs-on: self-hosted
