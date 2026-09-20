@@ -48,10 +48,10 @@ jobs:
 
       - name: Tag Image
 #        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.sha }}
-        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
+        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
       - name: Push Image
-        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
+        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
   dev-deploy:
     runs-on: self-hosted
@@ -72,19 +72,8 @@ jobs:
         run: az aks get-credentials --resource-group cluster --name dev --overwrite-existing
 
       - name: helm deploy app
-        run: helm upgrade -i ${{  inputs.component  }} . -f templates/${{  inputs.component  }}.yml  --set image.tag=${{ github.run_number }} --install --take-ownership
+        run: helm upgrade -i ${{  inputs.component  }}:latest . -f templates/${{  inputs.component  }}.yml  --install --take-ownership
 
-#      - name: argocd login
-#        run: |
-#          url=$(kubectl get svc argocd-server  -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
-#          argocd_password=$(kubectl get secrets argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode)
-#          argocd login argocd-dev.sandeepkumar0088.online --insecure --grpc-web --username admin --password $argocd_password
-#      - name: Create App in ArgoCD
-#        run: argocd app create ${{ inputs.component }} --upsert --repo https://github.com/Sandeepkumar0088/roboshop-helm-charts-v1.git --path . --dest-namespace default --dest-server https://kubernetes.default.svc --grpc-web --helm-set appVersion=${{ github.sha }}
-#      - name: Sync App in ArgoCD
-#        run: argocd app sync ${{ inputs.component }} --grpc-web
-#      - name: ArgoCD App health Check
-#        run: argocd app wait ${{ inputs.component }} --grpc-web --timeout 120
   qa-deploy:
     runs-on: self-hosted
     needs: dev-deploy
