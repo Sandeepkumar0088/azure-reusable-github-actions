@@ -49,6 +49,14 @@ jobs:
       - name: Tag Image
 #        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.sha }}
         run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:latest
+      - name: Azure Login
+        uses: azure/login@v3
+        with:
+          auth-type: IDENTITY
+          subscription-id: "bb2e4b65-7863-4a64-99b2-cd7d29b73bd7"
+          tenant-id: "525ac05a-796a-4239-a302-33808d9d2c38"
+      - name: acr login
+        run: az acr login --name roboshop5427
 
       - name: Push Image
         run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:latest
