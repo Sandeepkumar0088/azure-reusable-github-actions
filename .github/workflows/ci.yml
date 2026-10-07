@@ -47,11 +47,10 @@ jobs:
 
       - name: Tag Image
         # run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.sha }}
-        # run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:latest
-        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
+        run: docker tag ${{  inputs.component  }} roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
       - name: Push Image
-        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:${{ github.run_number }}
+        run: docker push roboshop5427.azurecr.io/${{  inputs.component  }}:latest
 
   dev-deploy:
     runs-on: self-hosted
@@ -72,7 +71,7 @@ jobs:
         run: az aks get-credentials --resource-group cluster --name dev --overwrite-existing
 
       - name: helm deploy app
-        run: helm upgrade -i ${{  inputs.component  }} ./charts/${{  inputs.component  }} -f charts/${{  inputs.component  }}/templates/${{  inputs.component  }}.yml --set image.tag=${{ github.run_number }} --install --take-ownership
+        run: helm upgrade -i ${{  inputs.component  }} ./charts/${{  inputs.component  }} -f charts/${{  inputs.component  }}/templates/${{  inputs.component  }}.yml --install --take-ownership
 
   qa-deploy:
     runs-on: self-hosted
